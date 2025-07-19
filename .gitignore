@@ -1,0 +1,12 @@
+# Node
+node_modules/
+client/node_modules/
+server/node_modules/
+
+# Logs and environment
+*.log
+.env
+.env.local
+
+# OS-specific
+.DS_Store
