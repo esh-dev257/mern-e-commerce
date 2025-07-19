@@ -8,7 +8,6 @@ A modern, full-stack e-commerce platform built with the MERN stack (MongoDB, Exp
 ## ✨ Features
 
 - **User Authentication** - Secure login system with Passport.js
-- **Product Browsing** - Browse and search for products
 - **Shopping Cart** - Add items to cart, manage quantities, and checkout
 - **Payment Processing** - Integrated with Razorpay for secure payments
 - **Order Management** - Track order history and status
