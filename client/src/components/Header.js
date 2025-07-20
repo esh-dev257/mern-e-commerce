@@ -212,18 +212,18 @@ const Header = ({ user, setUser }) => {
         order_id: order.id,
         handler: async function (response) {
           try {
-            // Save order details for all cart items
-            await axios.post("http://localhost:5000/api/save-cart-order", {
-              items: cart.map((item) => ({
-                productId: item._id,
-                quantity: item.quantity,
-                price: item.price,
-              })),
-              userId: user._id,
-              paymentId: response.razorpay_payment_id,
-              amount: totalAmount,
-              status: "paid",
-            });
+            // Save each cart item as a separate order
+            await Promise.all(
+              cart.map((item) =>
+                axios.post("http://localhost:5000/api/save-order", {
+                  productId: item._id,
+                  userId: user._id,
+                  paymentId: response.razorpay_payment_id,
+                  amount: item.price * item.quantity,
+                  status: "paid",
+                })
+              )
+            );
 
             setSnackbar({
               open: true,

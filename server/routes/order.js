@@ -9,6 +9,7 @@ const sendOrderEmail = require("../utils/mailer");
 router.post("/save-order", async (req, res) => {
   try {
     const { productId, userId, paymentId, amount, status } = req.body;
+
     const order = new Order({
       product: productId,
       user: userId,
@@ -16,6 +17,7 @@ router.post("/save-order", async (req, res) => {
       amount,
       status,
     });
+    console.log("Saving order with data:", req.body);
     await order.save();
 
     // Fetch user and product details for the email
@@ -61,16 +63,7 @@ router.post("/save-order", async (req, res) => {
 });
 
 // Protect this route with isAdmin
-router.get("/all-orders", isAdmin, async (req, res) => {
-  try {
-    const orders = await Order.find()
-      .populate("user", "displayName email")
-      .populate("product", "name price");
-    res.json(orders);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
+
 // Get all orders with user and product details
 router.get("/all-orders", async (req, res) => {
   try {
