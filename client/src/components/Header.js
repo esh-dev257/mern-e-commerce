@@ -55,14 +55,10 @@ const Header = ({ user, setUser }) => {
     severity: "success",
   });
 
-  // Check if user is admin
   const isAdmin = user?.email === "eshitabhawsar@gmail.com";
 
-  // Load cart from localStorage
   useEffect(() => {
-    // Only load cart for non-admin users
     if (!isAdmin) {
-      // Function to handle cart updates
       const handleCartUpdate = () => {
         const savedCart = localStorage.getItem("cart");
         if (savedCart) {
@@ -74,25 +70,21 @@ const Header = ({ user, setUser }) => {
         }
       };
 
-      // Function to handle opening cart drawer
       const handleOpenCartDrawer = () => {
         setCartDrawerOpen(true);
       };
 
-      // Add event listeners
       window.addEventListener("cart-updated", handleCartUpdate);
       window.addEventListener("open-cart-drawer", handleOpenCartDrawer);
 
-      // Initial cart load
       handleCartUpdate();
 
-      // Clean up event listeners
       return () => {
         window.removeEventListener("cart-updated", handleCartUpdate);
         window.removeEventListener("open-cart-drawer", handleOpenCartDrawer);
       };
     }
-  }, [isAdmin]); // Depend on isAdmin
+  }, [isAdmin]);
 
   const handleLogout = async () => {
     await fetch("http://localhost:5000/api/logout", {
@@ -170,7 +162,6 @@ const Header = ({ user, setUser }) => {
     }
   };
 
-  // Razorpay checkout
   const handleCheckout = async () => {
     if (!user) {
       setSnackbar({
@@ -195,7 +186,6 @@ const Header = ({ user, setUser }) => {
 
       const totalAmount = getCartTotal();
 
-      // Create order for the entire cart
       const res = await axios.post("http://localhost:5000/api/create-order", {
         amount: totalAmount,
         currency: "INR",
@@ -212,7 +202,6 @@ const Header = ({ user, setUser }) => {
         order_id: order.id,
         handler: async function (response) {
           try {
-            // Save each cart item as a separate order
             await Promise.all(
               cart.map((item) =>
                 axios.post("http://localhost:5000/api/save-order", {
@@ -231,7 +220,6 @@ const Header = ({ user, setUser }) => {
               severity: "success",
             });
 
-            // Clear the cart after successful payment
             setCart([]);
             localStorage.setItem("cart", JSON.stringify([]));
             window.dispatchEvent(new CustomEvent("cart-updated"));
@@ -273,7 +261,6 @@ const Header = ({ user, setUser }) => {
     }
   };
 
-  // Only include cart in navigation items for non-admin users
   const navigationItems = !isAdmin
     ? [
         {
@@ -294,7 +281,6 @@ const Header = ({ user, setUser }) => {
       }}
       role="presentation"
     >
-      {/* User Section */}
       {user && (
         <Box sx={{ p: 2, bgcolor: "#f5f5f5" }}>
           <Box display="flex" alignItems="center" gap={2}>
@@ -323,7 +309,6 @@ const Header = ({ user, setUser }) => {
 
       <Divider />
 
-      {/* Navigation Items - Only show for non-admin users */}
       {!isAdmin && navigationItems.length > 0 && (
         <List>
           {navigationItems.map((item) => (
@@ -376,7 +361,6 @@ const Header = ({ user, setUser }) => {
     </Box>
   );
 
-  // Cart drawer content
   const cartDrawerContent = (
     <Box
       sx={{
@@ -445,7 +429,6 @@ const Header = ({ user, setUser }) => {
               <React.Fragment key={item._id}>
                 <ListItem sx={{ py: 2, px: 2 }}>
                   <Box sx={{ display: "flex", width: "100%" }}>
-                    {/* Product Image */}
                     <Box
                       sx={{
                         width: 60,
@@ -469,8 +452,6 @@ const Header = ({ user, setUser }) => {
                         }}
                       />
                     </Box>
-
-                    {/* Product Details */}
                     <Box sx={{ flexGrow: 1 }}>
                       <Typography
                         variant="subtitle2"
@@ -487,7 +468,6 @@ const Header = ({ user, setUser }) => {
                         {formatPrice(item.price)}
                       </Typography>
 
-                      {/* Quantity Controls */}
                       <Box
                         sx={{ display: "flex", alignItems: "center", mt: 1 }}
                       >
@@ -614,7 +594,6 @@ const Header = ({ user, setUser }) => {
               justifyContent: "space-between",
             }}
           >
-            {/* Left Section: Menu + Logo */}
             <Box display="flex" alignItems="center" gap={1}>
               {isMobile && (
                 <IconButton
@@ -626,7 +605,6 @@ const Header = ({ user, setUser }) => {
                 </IconButton>
               )}
 
-              {/* Logo */}
               <Box
                 display="flex"
                 alignItems="center"
@@ -647,9 +625,7 @@ const Header = ({ user, setUser }) => {
               </Box>
             </Box>
 
-            {/* Right Section: Cart + Account */}
             <Box display="flex" alignItems="center" gap={2}>
-              {/* Cart - Show for all non-admin users */}
               {!isAdmin && (
                 <IconButton
                   color="inherit"
@@ -662,7 +638,6 @@ const Header = ({ user, setUser }) => {
                 </IconButton>
               )}
 
-              {/* User Section */}
               {user ? (
                 <Box
                   onClick={handleAccountMenuOpen}
@@ -711,7 +686,6 @@ const Header = ({ user, setUser }) => {
         </Container>
       </AppBar>
 
-      {/* Account Menu */}
       <Menu
         anchorEl={accountMenuAnchor}
         open={Boolean(accountMenuAnchor)}
@@ -731,12 +705,10 @@ const Header = ({ user, setUser }) => {
         </MenuItem>
       </Menu>
 
-      {/* Mobile Drawer */}
       <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
         {drawerContent}
       </Drawer>
 
-      {/* Cart Drawer */}
       <Drawer
         anchor="right"
         open={cartDrawerOpen}
@@ -745,7 +717,6 @@ const Header = ({ user, setUser }) => {
         {cartDrawerContent}
       </Drawer>
 
-      {/* Snackbar for notifications */}
       <Snackbar
         open={snackbar.open}
         autoHideDuration={3000}

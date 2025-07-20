@@ -31,7 +31,6 @@ const LoginPage = () => {
   };
 
   const handleLogin = () => {
-    // Redirect to the appropriate login URL based on the mode
     const loginUrl = isAdmin
       ? "http://localhost:5000/auth/google/"
       : "http://localhost:5000/auth/google";
@@ -52,7 +51,6 @@ const LoginPage = () => {
     >
       <Fade in timeout={500}>
         <Container maxWidth="xs">
-          {/* Brand */}
           <Box
             sx={{
               display: "flex",
@@ -100,7 +98,6 @@ const LoginPage = () => {
             </Typography>
           </Box>
 
-          {/* Login Card */}
           <Card
             sx={{
               borderRadius: 3,
@@ -187,7 +184,6 @@ const LoginPage = () => {
                   : "Sign in to shop and manage your orders"}
               </Typography>
 
-              {/* Login Button */}
               <Button
                 fullWidth
                 variant="contained"
@@ -229,7 +225,6 @@ const LoginPage = () => {
                 {`Sign in as ${isAdmin ? "Admin" : "Customer"}`}
               </Button>
 
-              {/* Terms */}
               <Box sx={{ mt: 3, textAlign: "center" }}>
                 <Typography
                   variant="caption"

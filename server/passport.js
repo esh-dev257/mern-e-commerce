@@ -1,4 +1,3 @@
-// server/passport.js
 const User = require("./models/User");
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
@@ -10,7 +9,6 @@ passport.use(
       callbackURL: "/auth/google/callback",
     },
     async (accessToken, refreshToken, profile, done) => {
-      // Find or create user in MongoDB
       let user = await User.findOne({ googleId: profile.id });
       if (!user) {
         user = await User.create({
@@ -26,7 +24,7 @@ passport.use(
 );
 
 passport.serializeUser((user, done) => {
-  done(null, user.id); // Use MongoDB _id
+  done(null, user.id); 
 });
 
 passport.deserializeUser(async (id, done) => {

@@ -33,7 +33,6 @@ const AdminDashboard = () => {
       .catch((err) => console.error(err));
   }, []);
 
-  // Status color mapping
   const getStatusColor = (status) => {
     switch (status?.toLowerCase()) {
       case "completed":
@@ -49,7 +48,6 @@ const AdminDashboard = () => {
     }
   };
 
-  // Mobile/Tablet Card Layout
   const MobileOrderCard = ({ order }) => (
     <Card
       sx={{
@@ -172,7 +170,6 @@ const AdminDashboard = () => {
         Admin Dashboard
       </Typography>
 
-      {/* Mobile and Tablet Layout */}
       {isMobile && (
         <Box>
           <Typography
@@ -188,7 +185,6 @@ const AdminDashboard = () => {
         </Box>
       )}
 
-      {/* Desktop Layout */}
       {!isMobile && (
         <TableContainer
           component={Paper}
@@ -330,7 +326,6 @@ const AdminDashboard = () => {
         </TableContainer>
       )}
 
-      {/* Empty state */}
       {orders.length === 0 && (
         <Paper
           sx={{

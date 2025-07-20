@@ -1,4 +1,3 @@
-// server/server.js
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -6,7 +5,7 @@ const session = require("express-session");
 const passport = require("passport");
 const Razorpay = require("razorpay");
 require("dotenv").config();
-require("./passport"); // Import passport config
+require("./passport");
 
 const app = express();
 app.use(
@@ -17,26 +16,19 @@ app.use(
 );
 app.use(express.json());
 
-// Session middleware
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false }, // Set to true if using HTTPS
+    cookie: { secure: false }, 
   })
 );
 
-// Initialize passport
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Test route
-app.get("/", (req, res) => {
-  res.send("API is running...");
-});
 
-// Google OAuth routes
 app.get(
   "/auth/google",
   passport.authenticate("google", { scope: ["profile", "email"] })
@@ -52,12 +44,10 @@ app.get(
     session: true,
   }),
   (req, res) => {
-    // Redirect to frontend after successful login
     res.redirect("http://localhost:3000");
   }
 );
 
-// Route to get current user
 app.get("/api/current_user", (req, res) => {
   console.log("Current user:", req.user);
   res.send(req.user);
@@ -68,14 +58,12 @@ app.use("/api", orderRoutes);
 const productRoutes = require("./routes/products");
 app.use("/api/products", productRoutes);
 
-// Logout route
 app.get("/api/logout", (req, res) => {
   req.logout(() => {
     res.send({ success: true });
   });
 });
 
-// MongoDB connection and server start (same as before)
 mongoose
   .connect(process.env.MONGO_URI, {
     useNewUrlParser: true,

@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const Product = require("../models/Product");
 
-// Get all products
 router.get("/", async (req, res) => {
   try {
     const products = await Product.find();
@@ -12,7 +11,6 @@ router.get("/", async (req, res) => {
   }
 });
 
-// (Optional) Add a route to create a product for testing
 router.post("/", async (req, res) => {
   try {
     const { name, description, price, image } = req.body;

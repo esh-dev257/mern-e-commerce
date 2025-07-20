@@ -4,7 +4,7 @@ const productSchema = new mongoose.Schema({
   name: String,
   description: String,
   price: Number,
-  image: String, // URL to product image
+  image: String, 
 });
 
 module.exports = mongoose.model("Product", productSchema);

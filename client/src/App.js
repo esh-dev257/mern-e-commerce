@@ -24,19 +24,15 @@ function App() {
       .catch(() => setUser(null));
   }, []);
 
-  if (user === undefined) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <Router>
       {!user ? (
-        // Non-logged in users
+       
         <Routes>
           <Route path="*" element={<LoginPage />} />
         </Routes>
       ) : user.email === adminEmail ? (
-        // Admin users
+        
         <>
           <Header user={user} setUser={setUser} />
           <Routes>
@@ -46,7 +42,7 @@ function App() {
           </Routes>
         </>
       ) : (
-        // Regular users
+        
         <>
           <Header user={user} setUser={setUser} />
           <Routes>

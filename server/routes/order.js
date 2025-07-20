@@ -3,7 +3,6 @@ const Order = require("../models/Order");
 const router = express.Router();
 const isAdmin = require("../middleware/admin");
 
-// Save order after payment
 const sendOrderEmail = require("../utils/mailer");
 
 router.post("/save-order", async (req, res) => {
@@ -20,11 +19,9 @@ router.post("/save-order", async (req, res) => {
     console.log("Saving order with data:", req.body);
     await order.save();
 
-    // Fetch user and product details for the email
     const user = await require("../models/User").findById(userId);
     const product = await require("../models/Product").findById(productId);
 
-    // Send email to admin
     await sendOrderEmail({
       to: process.env.ADMIN_EMAIL,
       subject: "🛒 New Order Placed!",
@@ -62,14 +59,12 @@ router.post("/save-order", async (req, res) => {
   }
 });
 
-// Protect this route with isAdmin
 
-// Get all orders with user and product details
 router.get("/all-orders", async (req, res) => {
   try {
     const orders = await Order.find()
-      .populate("user", "displayName email") // Only get displayName and email
-      .populate("product", "name price"); // Only get name and price
+      .populate("user", "displayName email") 
+      .populate("product", "name price"); 
     res.json(orders);
   } catch (err) {
     res.status(500).json({ error: err.message });
