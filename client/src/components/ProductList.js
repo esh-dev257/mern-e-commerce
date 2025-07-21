@@ -1,4 +1,4 @@
-import React, { useEffect, useState, memo } from "react"; 
+import React, { useEffect, useState, memo } from "react";
 import axios from "axios";
 import {
   Grid,
@@ -31,7 +31,7 @@ import {
   ShoppingCartCheckout,
 } from "@mui/icons-material";
 
-const RAZORPAY_KEY_ID = "rzp_test_PHxjgAg21bEtu2";
+const RAZORPAY_KEY_ID = "rzp_test_c0vYW5UTkY1rwD";
 
 const ProductCard = memo(
   ({
@@ -45,9 +45,8 @@ const ProductCard = memo(
     handleBuy,
     formatPrice,
   }) => {
-    
-    const rating = Math.floor(Math.random() * 5) + 1; 
-    const reviewCount = Math.floor(Math.random() * 1000); 
+    const rating = Math.floor(Math.random() * 5) + 1;
+    const reviewCount = Math.floor(Math.random() * 1000);
 
     return (
       <Grid item xs={6} sm={6} md={4} lg={3} xl={2.4}>
@@ -240,7 +239,7 @@ const ProductCard = memo(
               display: "flex",
               justifyContent: "space-between",
               gap: 1,
-              minHeight: 52, 
+              minHeight: 52,
             }}
           >
             {quantityInCart > 0 ? (
@@ -255,7 +254,7 @@ const ProductCard = memo(
                   px: 1,
                   py: 0.5,
                   bgcolor: "#f9f9f9",
-                  height: { xs: 36, sm: 40 }, 
+                  height: { xs: 36, sm: 40 },
                 }}
               >
                 <IconButton
@@ -387,7 +386,6 @@ const ProductCard = memo(
     );
   }
 );
-
 
 const ProductSkeleton = memo(() => (
   <Grid item xs={6} sm={6} md={4} lg={3} xl={2.4}>
