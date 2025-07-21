@@ -36,7 +36,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const RAZORPAY_KEY_ID = "rzp_test_PHxjgAg21bEtu2";
+const RAZORPAY_KEY_ID = "rzp_test_c0vYW5UTkY1rwD";
 
 const Header = ({ user, setUser }) => {
   const navigate = useNavigate();
